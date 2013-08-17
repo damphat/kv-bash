@@ -80,4 +80,11 @@ TESTCASE 'empty value => error code != 0'
     [ $? != 0 ]
     RESULT	
 
+TESTCASE 'spaces in value'
+	kvset name '  phat  dam  '
+	[ "$(kvget name)" == '  phat  dam  ' ]
+	RESULT
+	
+#more testcase here
+
 echo
