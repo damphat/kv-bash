@@ -2,7 +2,7 @@
  - key/value dabatase
  - database store in HOME directory
  - each user has 1 database
- - imports 5 bash functions via ```$ source kv-bash```
+ - imports 5 bash functions via ```$ source ./kv-bash```
  
 **Requirements**
 
