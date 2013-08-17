@@ -15,7 +15,7 @@ function TESTCASE() {
 	printf "%3s %-50s" "$TEST_COUNT" "$1"
 }
 
-rm -rf $KV_USER_DIR
+rm -rf "$KV_USER_DIR"
 
 echo
 echo RUN ALL TEST CASES:
@@ -31,11 +31,13 @@ TESTCASE 'set then get a variable'
 	RESULT
 
 TESTCASE 'set again with different value'
+	kvset name "dam ngoc phat"
 	kvset name "damphat"
 	[ "$(kvget name)" == "damphat" ]
 	RESULT
 
 TESTCASE 'del variable should be empty'
+	kvset name "dam ngoc phat"
 	kvdel name
 	[ "$(kvget name)" == "" ]
 	RESULT
@@ -65,6 +67,10 @@ TESTCASE 'set 3 keys/value; list => line count = 3'
 	kvset var2 value2
 	kvset var3 value3
 	[ $(kvlist | wc -l) == 3 ]
+	RESULT
+	
+TESTCASE 'get non-exist-var => line count = 1'
+	[ $(kvget non-exist-var | wc -l) == 1 ]
 	RESULT
 
 TESTCASE 'clear => line count = 0'

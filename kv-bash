@@ -56,7 +56,7 @@ kv_echo_err_box() {
 
 # Usage: kv_validate_key <key>
 kv_validate_key() {
-	[[ $1 =~ ^[0-9a-zA-Z._:-]+$  ]]
+	[[ "$1" =~ ^[0-9a-zA-Z._:-]+$  ]]
 }
 
 ########################
@@ -94,46 +94,46 @@ kv_validate_key() {
 
 # Usage: kvget <key>
 kvget() {
-	key=$1
-	kv_validate_key $key || {
+	key="$1"
+	kv_validate_key "$key" || {
 		kv_echo_err_box 'invalid param "key"' 'kvget()'
 		return 1
 	}
-	VALUE=$([ -f $KV_USER_DIR/$key ] && cat $KV_USER_DIR/$key)
-	echo $VALUE
+	VALUE="$([ -f "$KV_USER_DIR/$key" ] && cat "$KV_USER_DIR/$key")"
+	echo "$VALUE"
 	
 	[ "$VALUE" != "" ]
 }
 
 # Usage: kvset <key> [value] 
 kvset() {
-	key=$1
-	value=$2
-	kv_validate_key $key || {
+	key="$1"
+	value="$2"
+	kv_validate_key "$key" || {
 		kv_echo_err_box 'invalid param "key"' 'kvset()'
 		return 1
 	}
-	test -d $KV_USER_DIR || mkdir $KV_USER_DIR
-	echo $value > $KV_USER_DIR/$key
+	test -d "$KV_USER_DIR" || mkdir "$KV_USER_DIR"
+	echo "$value" > "$KV_USER_DIR/$key"
 }
 
 # Usage: kvdel <key>
 kvdel() {
-	key=$1
-	kv_validate_key $key || {
+	key="$1"
+	kv_validate_key "$key" || {
 		kv_echo_err_box 'invalid param "key"' 'kvdel()'
 		return 1
 	}
-	test -f $KV_USER_DIR/$key && rm -f $KV_USER_DIR/$key
+	test -f "$KV_USER_DIR/$key" && rm -f "$KV_USER_DIR/$key"
 }
 
 # list all key/value pairs to stdout
 # Usage: kvlist
 kvlist() {
-	for i in $KV_USER_DIR/*; do
-		if [ -f $i ]; then
-			key=$(basename $i)
-			echo "$key" "$(kvget $key)"
+	for i in "$KV_USER_DIR/"*; do
+		if [ -f "$i" ]; then
+			key="$(basename "$i")"
+			echo "$key" "$(kvget "$key")"
 		fi
 	done 
 }
@@ -141,5 +141,5 @@ kvlist() {
 # clear all key/value pairs in database
 # Usage: kvclear
 kvclear() {
-	rm -rf $KV_USER_DIR
+	rm -rf "$KV_USER_DIR"
 }
