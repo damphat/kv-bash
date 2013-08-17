@@ -1,0 +1,79 @@
+source db-bash
+
+OK()   { echo -e    "[\e[01;32m  OK  \e[0m]"; }
+FAILED()  { echo -e "[\e[01;31mFAILED\e[0m]"; }
+RESULT() { [ $? == 0 ] && OK || FAILED; }
+
+TEST_COUNT=0
+
+function TESTCASE() {
+    ((TEST_COUNT++))
+	printf "%3s %-50s" "$TEST_COUNT" "$1"
+}
+
+rm -rf $USER_DIR
+
+echo
+echo RUN ALL TEST CASES:
+echo ===================
+
+TESTCASE 'get unset var should return empty'
+	[ "$(get name)" == "" ]
+	RESULT
+
+TESTCASE 'set then get a variable'
+	set name "dam ngoc phat"
+	[ "$(get name)" == "dam ngoc phat" ]
+	RESULT
+
+TESTCASE 'set again with different value'
+	set name "damphat"
+	[ "$(get name)" == "damphat" ]
+	RESULT
+
+TESTCASE 'del variable should be empty'
+	del name
+	[ "$(get name)" == "" ]
+	RESULT
+
+TESTCASE 'del non existing valriable is no-error'
+	[ "$(del name 2>&1)" == "" ]
+	RESULT
+
+TESTCASE 'set without param return error'
+	set 2>/dev/null
+	[ $? != 0 ]
+	RESULT
+
+TESTCASE 'get without param return error'
+	get 2>/dev/null
+	[ $? != 0 ]
+	RESULT
+
+TESTCASE 'del without param return error'
+	del 2>/dev/null
+	[ $? != 0 ]
+	RESULT
+
+TESTCASE 'set 3 keys/value; list => line count = 3'
+	clear
+	set var1 value1
+	set var2 value2
+	set var3 value3
+	[ $(list | wc -l) == 3 ]
+	RESULT
+
+TESTCASE 'clear => line count = 0'
+	set var1 value1
+	set var2 value2
+	clear
+	[ $(list | wc -l) == 0 ]
+	RESULT
+	
+TESTCASE 'empty value => error code != 0'
+    set name 
+    $(get name)
+    [ $? != 0 ]
+    RESULT	
+
+echo
