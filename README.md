@@ -16,7 +16,7 @@ import all database functions
 $ source ./kv-bash         # import kv-bash functions
 ```
 
-no need to create database, just use the default one
+use database functions
 
 ```
 $ kvset <key> <value>      # create or change value of key
