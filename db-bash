@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ABOUT db-bash: 
 #    key/value dabatase for bash script
 #    database store in HOME directory
