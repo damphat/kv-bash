@@ -1,4 +1,4 @@
-**About db-bash**
+**About kv-bash**
 
  - key/value dabatase for bash script
  - database store in HOME directory
@@ -10,27 +10,27 @@ unix-like environement, no dependencies
 
 **Usage**
 ```
-$ source db-bash         # import db-bash functions
-$ set <key> <value>      # create or change value of key
-$ get <key>              # get value of key
-$ del <key>              # delete by key
-$ list                   # list all current key/value pairs
-$ clear                  # clear database
+$ source ./kv-bash         # import kv-bash functions
+$ kvset <key> <value>      # create or change value of key
+$ kvget <key>              # get value of key
+$ kvdel <key>              # delete by key
+$ kvlist                   # list all current key/value pairs
+$ kvclear                  # clear database
 ```
 **Examples**
 ``` 
-$ source db-bash
-$ set user damphat
-$ set pass abc@123
-$ list
+$ source ./kv-bash
+$ kvset user damphat
+$ kvset pass abc@123
+$ kvlist
 user damphat
 pass abc@123
-$ get user
+$ kvget user
 damphat
-$ get pass
+$ kvget pass
 abc@123
-$ del pass
-$ get pass
+$ kvdel pass
+$ kvget pass
 
-$ clear
+$ kvclear
 ```
