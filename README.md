@@ -1,5 +1,4 @@
 **About kv-bash**
- - language bash script
  - key/value dabatase
  - database store in HOME directory
  - each user has 1 database
@@ -19,6 +18,7 @@ $ source ./kv-bash         # import kv-bash functions
 
 no need to create database, just use the default one
 
+```
 $ kvset <key> <value>      # create or change value of key
 $ kvget <key>              # get value of key
 $ kvdel <key>              # delete by key
@@ -27,6 +27,7 @@ $ kvclear                  # clear database
 ```
 
 **Examples**
+
 ``` 
 $ source ./kv-bash
 $ kvset user damphat
@@ -52,7 +53,8 @@ cd kv-bash
 ./kv-test
 ```
 
-Result should be:
+Result should be
+
 ```
 RUN ALL TEST CASES:
 ===================
