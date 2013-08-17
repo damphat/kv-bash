@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 source db-bash
 
 OK()   { echo -e    "[\e[01;32m  OK  \e[0m]"; }
