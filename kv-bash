@@ -1,29 +1,31 @@
 #!/usr/bin/env bash
 # ABOUT kv-bash: 
-#    key/value dabatase for bash script
+#    key/value dabatase
 #    database store in HOME directory
 #    each user has 1 database
+#    imports 5 bash functions via ```$ source kv-bash```
 #
 # Author: damphat
 # Version: 0.1
 # Requirements: unix-like environement, no dependencies
 #
 # USAGE:
-#        kvset <key> <value>     # assign value to key
-#        kvget <key>             # get value of key
-#        kvdel <key>             # kvdelete by key
-#        kvlist                  # list all current key/value pairs
-#        kvclear                 # clear database
+#    source ./kv-bash        # import kv-bash functions
+#    kvset <key> <value>     # assign value to key
+#    kvget <key>             # get value of key
+#    kvdel <key>             # kvdelete by key
+#    kvlist                  # list all current key/value pairs
+#    kvclear                 # clear database
 #
 # EXAMPLES: 
 #    $ source ./kv-bash
-#    $ kvset user damphat
+#    $ kvset user mr.bob
 #    $ kvset pass abc@123
 #    $ kvlist
-#      user damphat
+#      user mr.bob
 #      pass abc@123
 #    $ kvget user
-#      damphat
+#      mr.bob
 #    $ kvget pass
 #      abc@123
 #    $ kvdel pass
@@ -35,7 +37,7 @@
 # CONSTANTS
 ########################
 
-KV_USER_DIR="$HOME/.kv bash"
+KV_USER_DIR="$HOME/.kv-bash"
 
 ########################
 # LOCAL FUNCTIONS
@@ -43,15 +45,15 @@ KV_USER_DIR="$HOME/.kv bash"
 
 # print to stderr, red color
 kv_echo_err() {
-  echo -e "\e[01;31m$@\e[0m" >&2
+	echo -e "\e[01;31m$@\e[0m" >&2
 }
 
 # Usage: kv_echo_err_box <err-msg> <function-name>
 kv_echo_err_box() {
-	  kv_echo_err "  +-------------------------------+"
-	  kv_echo_err "  | ERROR: $1"
-	  kv_echo_err "  | function: $2"
-	  kv_echo_err "  +-------------------------------+"
+	kv_echo_err "  +-------------------------------+"
+	kv_echo_err "  | ERROR: $1"
+	kv_echo_err "  | function: $2"
+	kv_echo_err "  +-------------------------------+"
 }
 
 # Usage: kv_validate_key <key>
@@ -71,13 +73,13 @@ kv_validate_key() {
 	kv_echo_err "  |                                                |"
 	kv_echo_err "  | Examples:                                      |"
 	kv_echo_err "  |     $ source ./kv-bash                         |"
-	kv_echo_err "  |     $ kvset user damphat                       |"
+	kv_echo_err "  |     $ kvset user mr.bob                       |"
 	kv_echo_err "  |     $ kvset pass abc@123                       |"
 	kv_echo_err "  |     $ kvlist                                   |"
-	kv_echo_err "  |       user damphat                             |"
+	kv_echo_err "  |       user mr.bob                             |"
 	kv_echo_err "  |       pass abc@123                             |"
 	kv_echo_err "  |     $ kvget user                               |"
-	kv_echo_err "  |       damphat                                  |"
+	kv_echo_err "  |       mr.bob                                  |"
 	kv_echo_err "  |     $ kvget pass                               |"
 	kv_echo_err "  |       abc@123                                  |"
 	kv_echo_err "  |     $ kvdel pass                               |"

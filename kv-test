@@ -21,47 +21,48 @@ echo
 echo RUN ALL TEST CASES:
 echo ===================
 
-TESTCASE 'get unset var should return empty'
+TESTCASE 'call kvget for non-exist key should return empty'
 	[ "$(kvget name)" == "" ]
 	RESULT
 
-TESTCASE 'set then get a variable'
-	kvset name "dam ngoc phat"
-	[ "$(kvget name)" == "dam ngoc phat" ]
+TESTCASE 'kvset then kvget a variable'
+	kvset name "Tom"
+	[ "$(kvget name)" == "Tom" ]
 	RESULT
 
-TESTCASE 'set again with different value'
-	kvset name "dam ngoc phat"
-	kvset name "damphat"
-	[ "$(kvget name)" == "damphat" ]
+TESTCASE 'kvset then kvset again with different value'
+	kvset name "Tom"
+	kvset name "Jerry"
+	[ "$(kvget name)" == "Jerry" ]
 	RESULT
 
-TESTCASE 'del variable should be empty'
-	kvset name "dam ngoc phat"
+TESTCASE 'deleted variable should be empty'
+	kvset name "hello world!"
 	kvdel name
 	[ "$(kvget name)" == "" ]
 	RESULT
 
-TESTCASE 'del non existing valriable is no-error'
+TESTCASE 'kvdel non exist should be OK'
+	kvdel name
 	[ "$(kvdel name 2>&1)" == "" ]
 	RESULT
 
-TESTCASE 'set without param return error'
+TESTCASE 'kvset without param return error'
 	kvset 2>/dev/null
 	[ $? != 0 ]
 	RESULT
 
-TESTCASE 'get without param return error'
+TESTCASE 'kvget without param return error'
 	kvget 2>/dev/null
 	[ $? != 0 ]
 	RESULT
 
-TESTCASE 'del without param return error'
+TESTCASE 'kvdel without param return error'
 	kvdel 2>/dev/null
 	[ $? != 0 ]
 	RESULT
 
-TESTCASE 'set 3 keys/value; list => line count = 3'
+TESTCASE 'kvset 3 keys/value; kvlist => line count = 3'
 	kvclear
 	kvset var1 value1
 	kvset var2 value2
@@ -69,18 +70,18 @@ TESTCASE 'set 3 keys/value; list => line count = 3'
 	[ $(kvlist | wc -l) == 3 ]
 	RESULT
 	
-TESTCASE 'get non-exist-var => line count = 1'
+TESTCASE 'non-exist-var => empty value => line count = 1'
 	[ $(kvget non-exist-var | wc -l) == 1 ]
 	RESULT
 
-TESTCASE 'clear => line count = 0'
-	kvset var1 value1
-	kvset var2 value2
+TESTCASE 'kvclear; kvlist => line count = 0'
+	kvset cat Tom
+	kvset mouse Jerry
 	kvclear
 	[ $(kvlist | wc -l) == 0 ]
 	RESULT
 	
-TESTCASE 'empty value => error code != 0'
+TESTCASE 'kvget return empty value => error code != 0'
     kvset name 
     $(kvget name)
     [ $? != 0 ]
