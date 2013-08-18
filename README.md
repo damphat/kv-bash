@@ -1,8 +1,8 @@
 **About kv-bash**
- - key/value dabatase
- - database store in HOME directory
+ - tiny key/value dabatase
+ - database store in home directory
  - each user has 1 database
- - imports 5 bash functions via ```$ source ./kv-bash```
+ - usage by importing 5 bash functions via ```$ source ./kv-bash```
  
 **Requirements**
 
