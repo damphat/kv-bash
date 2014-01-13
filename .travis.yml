@@ -2,4 +2,3 @@ language: bash
 
 script:
     - bash kv-test
-    - sh kv-test
