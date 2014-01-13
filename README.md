@@ -1,4 +1,6 @@
-**About kv-bash**
+kv-bash [![Build Status](https://travis-ci.org/damphat/kv-bash.png?branch=master)](https://travis-ci.org/damphat/kv-bash)
+=====================
+**About**
  - tiny key/value dabatase
  - database store in home directory
  - each user has 1 database
