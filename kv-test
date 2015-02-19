@@ -91,6 +91,7 @@ TESTCASE 'spaces in value'
 	kvset name '  phat  dam  '
 	[ "$(kvget name)" == '  phat  dam  ' ]
 	RESULT
+	kvdel name
 	
 #more testcase here
 
