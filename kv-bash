@@ -37,7 +37,7 @@
 # CONSTANTS
 ########################
 
-KV_USER_DIR="$HOME/.kv-bash"
+default_kv_user_dir="$HOME/.kv-bash"
 
 ########################
 # LOCAL FUNCTIONS
@@ -50,9 +50,11 @@ kv_echo_err() {
 
 # Usage: kv_echo_err_box <err-msg> <function-name>
 kv_echo_err_box() {
+	kv_user_dir=${KV_USER_DIR:-$default_kv_user_dir}
 	kv_echo_err "  +-------------------------------+"
 	kv_echo_err "  | ERROR: $1"
 	kv_echo_err "  | function: $2"
+	kv_echo_err "  | dir: $kv_user_dir"
 	kv_echo_err "  +-------------------------------+"
 }
 
@@ -101,7 +103,8 @@ kvget() {
 		kv_echo_err_box 'invalid param "key"' 'kvget()'
 		return 1
 	}
-	VALUE="$([ -f "$KV_USER_DIR/$key" ] && cat "$KV_USER_DIR/$key")"
+	kv_user_dir=${KV_USER_DIR:-$default_kv_user_dir}
+	VALUE="$([ -f "$kv_user_dir/$key" ] && cat "$kv_user_dir/$key")"
 	echo "$VALUE"
 	
 	[ "$VALUE" != "" ]
@@ -115,8 +118,9 @@ kvset() {
 		kv_echo_err_box 'invalid param "key"' 'kvset()'
 		return 1
 	}
-	test -d "$KV_USER_DIR" || mkdir "$KV_USER_DIR"
-	echo "$value" > "$KV_USER_DIR/$key"
+	kv_user_dir=${KV_USER_DIR:-$default_kv_user_dir}
+	test -d "$kv_user_dir" || mkdir "$kv_user_dir"
+	echo "$value" > "$kv_user_dir/$key"
 }
 
 # Usage: kvdel <key>
@@ -126,13 +130,15 @@ kvdel() {
 		kv_echo_err_box 'invalid param "key"' 'kvdel()'
 		return 1
 	}
-	test -f "$KV_USER_DIR/$key" && rm -f "$KV_USER_DIR/$key"
+	kv_user_dir=${KV_USER_DIR:-$default_kv_user_dir}
+	test -f "$kv_user_dir/$key" && rm -f "$kv_user_dir/$key"
 }
 
 # list all key/value pairs to stdout
 # Usage: kvlist
 kvlist() {
-	for i in "$KV_USER_DIR/"*; do
+	kv_user_dir=${KV_USER_DIR:-$default_kv_user_dir}
+	for i in "$kv_user_dir/"*; do
 		if [ -f "$i" ]; then
 			key="$(basename "$i")"
 			echo "$key" "$(kvget "$key")"
