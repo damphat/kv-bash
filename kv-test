@@ -8,6 +8,9 @@ FAILED()  { echo -e "[\e[01;31mFAILED\e[0m]"; }
 RESULT()  { [ $? == 0 ] && OK || FAILED; }
 
 TEST_COUNT=0
+test_dirA="./testingdirA"
+test_dirB="./testingdirB"
+KV_USER_DIR="$test_dirA"
 
 # Usage: TESTCASE [description string]
 function TESTCASE() {
@@ -15,7 +18,7 @@ function TESTCASE() {
 	printf "%3s %-50s" "$TEST_COUNT" "$1"
 }
 
-rm -rf "$KV_USER_DIR"
+rm -rf "$test_dirA" "$test_dirB"
 
 echo
 echo RUN ALL TEST CASES:
@@ -106,6 +109,23 @@ TESTCASE 'spaces in value without quotes'
 	[ "$(kvget name)" == "foo bar fizz buzz" ]
 	RESULT
 	kvdel name
+
+TESTCASE 'can change user dir'
+	kvclear
+	kvset Foo Bar
+	KV_USER_DIR="$test_dirB"
+	kvset var1 value1
+	kvset var2 value2
+	kvset var3 value3
+	[ $(kvlist | wc -l) == 3 ]
+	RESULT
+	kvclear
+
+TESTCASE 'can return to old user dir'
+	KV_USER_DIR="$test_dirA"
+	[ $(kvlist | wc -l) == 1 ]
+	RESULT
+	kvclear
 
 #more testcase here
 
