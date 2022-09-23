@@ -69,7 +69,7 @@ kv_validate_key() {
 
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || {
 	kv_echo_err "  +------------------------------------------------+"
-	kv_echo_err "  | FATAL ERROR: wrong usage :(                   |"
+	kv_echo_err "  | FATAL ERROR: wrong usage :(                    |"
 	kv_echo_err "  | You should use this via source                 |"
 	kv_echo_err "  |     $ source ./kv-bash                         |"	
 	kv_echo_err "  |                                                |"
@@ -149,5 +149,6 @@ kvlist() {
 # clear all key/value pairs in database
 # Usage: kvclear
 kvclear() {
-	rm -rf "$KV_USER_DIR"
+  kv_user_dir=${KV_USER_DIR:-$default_kv_user_dir}
+	rm -rf "$kv_user_dir"
 }
