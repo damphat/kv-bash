@@ -149,5 +149,6 @@ kvlist() {
 # clear all key/value pairs in database
 # Usage: kvclear
 kvclear() {
-	rm -rf "$KV_USER_DIR"
+        kv_user_dir=${KV_USER_DIR:-$default_kv_user_dir}
+	rm -rf "$kv_user_dir"
 }
