@@ -10,7 +10,6 @@ RESULT()  { [ $? == 0 ] && OK || FAILED; }
 TEST_COUNT=0
 test_dirA="./testingdirA"
 test_dirB="./testingdirB"
-KV_USER_DIR="$test_dirA"
 
 # Usage: TESTCASE [description string]
 function TESTCASE() {
@@ -23,6 +22,15 @@ rm -rf "$test_dirA" "$test_dirB"
 echo
 echo RUN ALL TEST CASES:
 echo ===================
+
+TESTCASE 'NO KV_USER_DIR: kvclear; kvlist => line count = 0'
+        kvset cat Tom
+        kvset mouse Jerry
+        kvclear
+        [ $(kvlist | wc -l) == 0 ]
+        RESULT
+
+KV_USER_DIR="$test_dirA"
 
 TESTCASE 'call kvget for non-exist key should return empty'
 	[ "$(kvget name)" == "" ]
