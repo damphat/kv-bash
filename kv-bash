@@ -113,14 +113,14 @@ kvget() {
 # Usage: kvset <key> [value] 
 kvset() {
 	key="$1"
-	value="$2"
+	value="${@:2}"
 	kv_validate_key "$key" || {
 		kv_echo_err_box 'invalid param "key"' 'kvset()'
 		return 1
 	}
 	kv_user_dir=${KV_USER_DIR:-$default_kv_user_dir}
 	test -d "$kv_user_dir" || mkdir "$kv_user_dir"
-	echo "$value" > "$kv_user_dir/$key"
+	echo "${value[@]}" > "$kv_user_dir/$key"
 }
 
 # Usage: kvdel <key>

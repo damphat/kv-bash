@@ -104,6 +104,20 @@ TESTCASE 'spaces in value'
 	RESULT
 	kvdel name
 
+TESTCASE 'spaces in value with substitution'
+	test="fizz buzz"
+	kvset name "foo bar $test"
+	[ "$(kvget name)" == "foo bar fizz buzz" ]
+	RESULT
+	kvdel name
+
+TESTCASE 'spaces in value without quotes'
+	test="fizz buzz"
+	kvset name foo bar $test
+	[ "$(kvget name)" == "foo bar fizz buzz" ]
+	RESULT
+	kvdel name
+
 TESTCASE 'can change user dir'
 	kvclear
 	kvset Foo Bar
@@ -120,7 +134,7 @@ TESTCASE 'can return to old user dir'
 	[ $(kvlist | wc -l) == 1 ]
 	RESULT
 	kvclear
-	
+
 #more testcase here
 
 echo

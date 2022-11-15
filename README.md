@@ -73,4 +73,6 @@ RUN ALL TEST CASES:
  11 kvclear; kvlist => line count = 0                 [  OK  ]
  12 kvget return empty value => error code != 0       [  OK  ]
  13 spaces in value                                   [  OK  ]
+ 14 spaces in value with substitution                 [  OK  ]
+ 15 spaces in value without quotes                    [  OK  ]
 ```
